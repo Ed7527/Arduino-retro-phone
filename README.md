@@ -8,7 +8,8 @@ First step is to break up the project into phases and smaller challenges.
 
 Phase 1:
 
-1. Get the ringer to work.
+1. Get the ringer to work. (Completed - Used an H-bridge with 2 9V batteries in series)
 2. Get an output from the microphone
 3. Get in input to the speaker.
 4. Decode the rotary dial numbers.
+
