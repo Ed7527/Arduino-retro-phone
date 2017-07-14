@@ -1,5 +1,12 @@
-int currentState = 2;
+bool finalPulse = false;
 bool previousState;
+
+int currentState = 2;
+
+unsigned long previousTime = 0;
+unsigned long timeElapsed = 0;
+
+int digit = 0;
 
 void setup() {
   // put your setup code here, to run once:
@@ -12,44 +19,38 @@ void setup() {
 
 void loop() {
   // put your main code here, to run repeatedly:
-  unsigned long timeElapsedInMilliSeconds = 0;
-  unsigned long currentTime = millis();
-  unsigned long previousTime;
-  
-  bool finalPulse = false;
-  int digit = 0;
-  
   while(digitalRead(currentState) == LOW){
-    previousState = LOW;
     digitalWrite(3, LOW);
   }
 
-  // goes from low to high.  Get the digit
   while(!finalPulse){
-    
-    //add +1 each time state goes from low to high
-    if((previousState == LOW) && (currentState == HIGH)){
-      digit++;
+    digitalWrite(3, HIGH);
+
+    unsigned long currentTime = millis();
+    timeElapsed = currentTime - previousTime;
+
+    if(digitalRead(currentState) == HIGH) {
       previousState = HIGH;
     }
 
-    // Reset timer to 0
-    if ((previousState == HIGH) && (currentState == LOW)){
-      timeElapsedInMilliSeconds = 0;
-      previousTime = currentTime;
-      previousState = LOW;
+    if((digitalRead(currentState) == LOW)  && (previousState == HIGH)){
+    //Happens when the state has gone from high to low
+    previousTime = currentTime;
+    previousState = LOW;
+    digit++;
     }
-    
-    timeElapsedInMilliSeconds = currentTime - previousTime;
-    // it's the final pulse if currentState has been low for more than 100ms.
 
-    if((currentState == LOW) && (timeElapsedInMilliSeconds < 150)){
+    if(digitalRead(currentState) == LOW){
+      previousState =LOW;
+    }
+
+    if ((timeElapsed < 300) && (digitalRead(currentState) == LOW)){
       finalPulse = true;
       Serial.print(digit);
+      Serial.print("\n");
+      digit = 0;
     }
   }
-
+  finalPulse = false;
   
-  
-  digitalWrite(3, HIGH);
 }
