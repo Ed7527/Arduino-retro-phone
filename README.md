@@ -10,6 +10,6 @@ Phase 1:
 
 1. Get the ringer to work. (Completed - Used an H-bridge with 2 9V batteries in series)
 2. Get an output from the microphone
-3. Get in input to the speaker.
-4. Decode the rotary dial numbers.
+3. Get in input to the speaker. (Completed - Used a 300mV p-p square wave)
+4. Decode the rotary dial numbers. (Mostly completed - still needs tweaking to make it more accurate)
 
